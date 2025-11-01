@@ -5,6 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seeker AI - Console Assistant for Students</title>
     <meta name="description" content="Seeker is a powerful console-based AI assistant with instant answers, stealth mode, and serious learning power."/>
+</head>
+<body>
+    <!-- A imagem muda automaticamente conforme o tema -->
+    <img id="theme-img" alt="Logo do site" width="200" height="200" />
+
+    <script>
+      (function () {
+        const lightSrc = "https://i.imgur.com/GStEYsK.png";
+        const darkSrc  = "https://i.imgur.com/RIy85Nc.png";
+        const img = document.getElementById("theme-img");
+
+        if (!img) return;
+
+        function updateImage() {
+          const htmlIsDark = document.documentElement.classList.contains("dark");
+          const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const useDark = htmlIsDark || prefersDark;
+          img.src = useDark ? darkSrc : lightSrc;
+        }
+
+        // Inicial
+        updateImage();
+
+        // Detecta quando o navegador muda o tema
+        if (window.matchMedia) {
+          const mq = window.matchMedia("(prefers-color-scheme: dark)");
+          mq.addEventListener ? mq.addEventListener("change", updateImage) : mq.addListener(updateImage);
+        }
+
+        // Detecta quando a classe "dark" é alterada no HTML
+        const observer = new MutationObserver((mutations) => {
+          for (const m of mutations) {
+            if (m.type === "attributes" && m.attributeName === "class") {
+              updateImage();
+              break;
+            }
+          }
+        });
+        observer.observe(document.documentElement, { attributes: true });
+
+        window.addEventListener("beforeunload", () => observer.disconnect());
+      })();
+    </script>
+</body>
+</html>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -823,4 +868,5 @@
                     <div class="feature-card-mini">
                         <div class="feature-card-mini-content">
                             <div class="feature-badge">
+
                                 <svg xmlns="
