@@ -1,52 +1,13 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Seeker AI - Console Assistant for Students</title>
   <meta name="description" content="Seeker is a powerful console-based AI assistant with instant answers, stealth mode, and serious learning power."/>
-
-  <!-- Favicon dinâmico -->
-  <link id="favicon" rel="icon" type="image/png" href="https://i.imgur.com/GStEYsK.png">
-
-  <script>
-    (function () {
-      const lightIcon = "https://i.imgur.com/GStEYsK.png";
-      const darkIcon  = "https://i.imgur.com/RIy85Nc.png";
-      const favicon = document.getElementById("favicon");
-
-      if (!favicon) return;
-
-      function updateFavicon() {
-        const htmlIsDark = document.documentElement.classList.contains("dark");
-        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const useDark = htmlIsDark || prefersDark;
-        favicon.href = useDark ? darkIcon : lightIcon;
-      }
-
-      // Inicial
-      updateFavicon();
-
-      // Atualiza quando o tema do navegador muda
-      if (window.matchMedia) {
-        const mq = window.matchMedia("(prefers-color-scheme: dark)");
-        mq.addEventListener ? mq.addEventListener("change", updateFavicon) : mq.addListener(updateFavicon);
-      }
-
-      // Atualiza quando a classe "dark" muda
-      const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-          if (m.type === "attributes" && m.attributeName === "class") {
-            updateFavicon();
-            break;
-          }
-        }
-      });
-      observer.observe(document.documentElement, { attributes: true });
-
-      window.addEventListener("beforeunload", () => observer.disconnect());
-    })();
-  </script>
+  
+  <!-- Favicon fixo -->
+  <link rel="icon" type="image/png" href="https://i.imgur.com/GStEYsK.png">
 </head>
 <body>
 </body>
@@ -871,5 +832,6 @@
                             <div class="feature-badge">
 
                                 <svg xmlns="
+
 
 
