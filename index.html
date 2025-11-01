@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seeker AI - Console Assistant for Students</title>
+    <meta name="description" content="Seeker is a powerful console-based AI assistant with instant answers, stealth mode, and serious learning power."/>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        /* Reset e Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        nav {
+            max-width: 80rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-links {
+            display: none;
+            gap: 0.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-links {
+                display: flex;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .nav-link {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #d1d5db;
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-actions {
+            display: none;
+            gap: 1rem;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-actions {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: 0.375rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: white;
+            color: black;
+        }
+
+        .btn-primary:hover {
+            background: #e5e5e5;
+        }
+
+        .btn-secondary {
+            color: #d1d5db;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 1.5rem 3rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+        }
+
+        .container {
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+
+        .announcement {
+            display: inline-block;
+            background: linear-gradient(to right, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.2), rgba(102, 126, 234, 0.1));
+            padding: 0.625rem 1.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            margin-bottom: 3rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .announcement:hover {
+            background: linear-gradient(to right, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.25), rgba(102, 126, 234, 0.15));
+        }
+
+        .announcement-text {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #a78bfa;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3.75rem;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            max-width: 42rem;
+            margin: 0 auto 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .subtitle {
+                font-size: 1.25rem;
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-buttons {
+                flex-direction: row;
+            }
+        }
+
+        .platform-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: #18181b;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        @media (min-width: 768px) {
+            .features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            background: #27272a;
+            padding: 0.75rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+        .feature-icon svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .feature-content h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-content p {
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        /* Code Section */
+        .code-section {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+        }
+
+        .code-container {
+            border: 1px solid #1a1a1a;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            background: #0a0a0a;
+        }
+
+        .code-header {
+            background: #18181b;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .code-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #d1d5db;
+        }
+
+        .copy-btn {
+            padding: 0.375rem 0.875rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 0.375rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.75rem;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .code-info {
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .code-info svg {
+            width: 64px;
+            height: 64px;
+            color: #a78bfa;
+            margin: 0 auto 1.5rem;
+        }
+
+        .code-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .code-info p {
+            color: #d1d5db;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 4rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .features-section {
+                padding: 4rem 2rem;
+            }
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .features-three-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 640px) {
+            .features-three-col {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature-card-mini {
+            border: 1px solid #1a1a1a;
+            border-radius: 0.75rem;
+            background: black;
+            padding: 1.5rem;
+        }
+
+        .feature-card-mini-content {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .feature-badge {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 0.625rem;
+            border-radius: 9999px;
+            width: fit-content;
+            flex-shrink: 0;
+        }
+
+        .feature-badge svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #a78bfa;
+        }
+
+        .feature-card-mini h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card-mini p {
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .cta-card {
+            position: relative;
+            border: 1px solid #1a1a1a;
+            border-radius: 0.75rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            overflow: hidden;
+        }
+
+        .cta-bg {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .cta-gradient {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.08), transparent);
+            border-radius: 0.75rem;
+            filter: blur(25px);
+        }
+
+        .cta-content {
+            position: relative;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .cta-content {
+                padding: 3rem;
+            }
+        }
+
+        .cta-icon {
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            padding: 0.75rem;
+            border-radius: 9999px;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+        }
+
+        .cta-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #a78bfa;
+        }
+
+        .cta-content h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .cta-content h2 {
+                font-size: 2.25rem;
+            }
+        }
+
+        .cta-content > p {
+            font-size: 1.125rem;
+            color: #d1d5db;
+            max-width: 42rem;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+            .cta-buttons {
+                flex-direction: row;
+            }
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: black;
+            backdrop-filter: blur(8px);
+        }
+
+        .footer-content {
+            max-width: 80rem;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                padding: 3rem 2rem;
+            }
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            line-height: 1.625;
+        }
+
+        .footer-section h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            font-size: 0.875rem;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .footer-copyright {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        svg {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+    <script>
+        function openPastebin() {
+            window.open('https://pastebin.com/raw/M6xswXmc', '_blank');
+        }
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div>
+                <a href="/" class="logo">
+                    <svg viewBox="0 0 100 100">
+                        <ellipse cx="50" cy="50" rx="45" ry="25" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                        <circle cx="50" cy="50" r="15" fill="none" stroke="currentColor" stroke-width="2.5"/>
+                        <circle cx="50" cy="50" r="7" fill="currentColor"/>
+                    </svg>
+                    <span>Seeker</span>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#code" class="nav-link">Get Code</a>
+            </div>
+
+            <div class="nav-actions">
+                <button onclick="openPastebin()" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    Get Code
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <a href="#" class="announcement">
+                    <p class="announcement-text">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        Just released: Seeker V1.0
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14m-7-7 7 7-7 7"></path>
+                        </svg>
+                    </p>
+                </a>
+
+                <h1>Seeker, The #1 Console AI Assistant. Period.</h1>
+                <p class="subtitle">Fast, powerful, and packed with exclusive features. The ultimate student solution with stealth mode.</p>
+
+                <div class="hero-buttons">
+                    <button onclick="openPastebin()" class="btn btn-primary">
+                        Copy Code
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14m-7-7 7 7-7 7"></path>
+                        </svg>
+                    </button>
+                    <a href="#features" class="btn btn-secondary">
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v20M2 12h20"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <p class="platform-note">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                    <span>Seeker Works on Any Browser with F12 Console Access</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- Quick Features -->
+        <section>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Instant Answers</h3>
+                        <p>Get direct, no-fluff responses in fast mode. Perfect for quick homework checks.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>Stealth Mode (F8)</h3>
+                        <p>Hide instantly when teacher approaches. Press F8 to toggle visibility.</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 20v2M12 2v2M17 20v2M17 2v2M2 12h2M2 17h2M2 7h2M20 12h2M20 17h2M20 7h2M7 20v2M7 2v2"/>
+                            <rect x="4" y="4" width="16" height="16" rx="2"/>
+                            <rect x="8" y="8" width="8" height="8" rx="1"/>
+                        </svg>
+                    </div>
+                    <div class="feature-content">
+                        <h3>AI Powered</h3>
+                        <p>Groq's Llama 3.3 70B model for fast, accurate answers on math and English.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code Section -->
+        <section class="code-section" id="code">
+            <div class="code-container">
+                <div class="code-header">
+                    <span class="code-title">📋 Get Seeker Code</span>
+                    <button class="copy-btn" onclick="openPastebin()">
+                        <span>Open Pastebin</span>
+                    </button>
+                </div>
+                <div class="code-info">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                    <h3>Click above to get the code</h3>
+                    <p>You'll be redirected to Pastebin where you can copy the complete Seeker AI code</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Powerful Features</h2>
+                    <p>Advanced features designed for students who want to learn efficiently.</p>
+                </div>
+
+                <div class="features-three-col">
+                    <div class="feature-card-mini">
+                        <div class="feature-card-mini-content">
+                            <div class="feature-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Direct Answers</h3>
+                                <p>Fast mode gives you just the answer you need. No explanations, no fluff. Perfect for quick checks during homework.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card-mini">
+                        <div class="feature-card-mini-content">
+                            <div class="feature-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Stealth Mode (F8)</h3>
+                                <p>Instantly hide the interface when teacher approaches. One key press and it's gone. Perfect for staying under the radar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card-mini">
+                        <div class="feature-card-mini-content">
+                            <div class="feature-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Instant Translation</h3>
+                                <p>Select any English text and get instant translation. Great for reading articles, tutorials and international content.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card-mini">
+                        <div class="feature-card-mini-content">
+                            <div class="feature-badge">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Math & English Modes</h3>
+                                <p>Specialized modes for different subjects. Math mode for quick calculations, English mode for grammar and vocabulary help.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="feature-card-mini">
+                        <div class="feature-card-mini-content">
+                            <div class="feature-badge">
+                                <svg xmlns="
