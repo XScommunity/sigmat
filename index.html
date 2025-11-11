@@ -8,10 +8,6 @@
   
   <!-- Favicon fixo -->
   <link rel="icon" type="image/png" href="https://i.imgur.com/GStEYsK.png">
-</head>
-<body>
-</body>
-</html>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -95,14 +91,14 @@
         }
 
         .nav-actions {
-            display: none;
-            gap: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
         }
 
-        @media (min-width: 1024px) {
+        @media (min-width: 768px) {
             .nav-actions {
-                display: flex;
-                align-items: center;
+                gap: 1rem;
             }
         }
 
@@ -137,6 +133,17 @@
         .btn-secondary:hover {
             color: white;
             background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-chat {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1.25rem;
+        }
+
+        .btn-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
         }
 
         /* Hero Section */
@@ -617,11 +624,6 @@
             vertical-align: middle;
         }
     </style>
-    <script>
-        function openPastebin() {
-            window.open('https://pastebin.com/raw/M6xswXmc', '_blank');
-        }
-    </script>
 </head>
 <body>
     <!-- Header -->
@@ -644,11 +646,17 @@
             </div>
 
             <div class="nav-actions">
+                <a href="https://seeker-chat.vercel.app/" target="_blank" class="btn btn-chat">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <span class="hide-mobile">Open Chat</span>
+                </a>
                 <button onclick="openPastebin()" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                     </svg>
-                    Get Code
+                    <span class="hide-mobile">Get Code</span>
                 </button>
             </div>
         </nav>
@@ -675,8 +683,14 @@
                 <p class="subtitle">Fast, powerful, and packed with exclusive features. The ultimate student solution with stealth mode.</p>
 
                 <div class="hero-buttons">
+                    <a href="https://seeker-chat.vercel.app/" target="_blank" class="btn btn-chat">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                        Open Chat Interface
+                    </a>
                     <button onclick="openPastebin()" class="btn btn-primary">
-                        Copy Code
+                        Copy Console Code
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14m-7-7 7 7-7 7"></path>
                         </svg>
@@ -693,7 +707,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
                     </svg>
-                    <span>Seeker Works on Any Browser with F12 Console Access</span>
+                    <span>Available as Console Code or Web Chat Interface</span>
                 </p>
             </div>
         </section>
@@ -721,22 +735,20 @@
                         </svg>
                     </div>
                     <div class="feature-content">
-                        <h3>Stealth Mode (F8)</h3>
-                        <p>Hide instantly when teacher approaches. Press F8 to toggle visibility.</p>
+                        <h3>Stealth Mode (F8 / `)</h3>
+                        <p>Hide instantly when teacher approaches. Press F8 or ` to toggle visibility.</p>
                     </div>
                 </div>
 
                 <div class="feature-item">
                     <div class="feature-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 20v2M12 2v2M17 20v2M17 2v2M2 12h2M2 17h2M2 7h2M20 12h2M20 17h2M20 7h2M7 20v2M7 2v2"/>
-                            <rect x="4" y="4" width="16" height="16" rx="2"/>
-                            <rect x="8" y="8" width="8" height="8" rx="1"/>
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                         </svg>
                     </div>
                     <div class="feature-content">
-                        <h3>AI Powered</h3>
-                        <p>Groq's Llama 3.3 70B model for fast, accurate answers on math and English.</p>
+                        <h3>Web Chat Available</h3>
+                        <p>Prefer a clean interface? Use our web chat version for a better experience.</p>
                     </div>
                 </div>
             </div>
@@ -755,8 +767,9 @@
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
                     </svg>
-                    <h3>Click above to get the code</h3>
-                    <p>You'll be redirected to Pastebin where you can copy the complete Seeker AI code</p>
+                    <h3>Click above to get the console code</h3>
+                    <p>You'll be redirected to Pastebin where you can copy the complete Seeker AI console code</p>
+                    <a href="https://seeker-chat.vercel.app/" target="_blank" class="btn btn-chat">Or use our Web Chat →</a>
                 </div>
             </div>
         </section>
@@ -793,7 +806,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h3>Stealth Mode (F8)</h3>
+                                <h3>Stealth Mode</h3>
                                 <p>Instantly hide the interface when teacher approaches. One key press and it's gone. Perfect for staying under the radar.</p>
                             </div>
                         </div>
@@ -803,32 +816,4 @@
                         <div class="feature-card-mini-content">
                             <div class="feature-badge">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3>Instant Translation</h3>
-                                <p>Select any English text and get instant translation. Great for reading articles, tutorials and international content.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="feature-card-mini">
-                        <div class="feature-card-mini-content">
-                            <div class="feature-badge">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3>Math & English Modes</h3>
-                                <p>Specialized modes for different subjects. Math mode for quick calculations, English mode for grammar and vocabulary help.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                                <svg xmlns="
-
-
-
-
+                                    <path d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.
